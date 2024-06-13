@@ -1,0 +1,14 @@
+Package: paperTools
+Type: Package
+Title: The tiny toolkit you will use when writing a paper
+Version: 0.1.0
+Date: 2024-03-29
+Authors@R: c(
+    person("Zhihao", "Xu", email = "zhihao_xu_a@163.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1312-8428"))
+    )
+Maintainer: Zhihao Xu <zhihao_xu_a@163.com>
+Description: The tiny toolkit you will use when writing a paper
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
