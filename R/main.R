@@ -3,7 +3,7 @@
 #' Run a string of characters
 #'
 #' @export
-evalParse = function(texts_) {unlist(lapply(texts_, \(text__) eval(parse(text = text__))))}
+evalParse = function(texts_, env_) {unlist(lapply(texts_, \(text__) eval(parse(text = text__), envir = env_)))}
 
 #' knitBook
 #'
@@ -31,13 +31,13 @@ capitalize = function(sentence_) {
 #' @param path2raw_ path to raw file
 #'
 #' @export
-evalPlaceholder = function(path2raw_) {
+evalPlaceholder = function(path2raw_, env_ = .GlobalEnv) {
 
   df_convert_ = tibble(
     raw = readLines(path2raw_),
     source = str_extract(raw, "&.*?&"),
     toEval = str_extract(raw, "(?<=&).*?(?=&)"),
-    UMI = ifelse(is.na(source), NA, evalParse(toEval)),
+    UMI = ifelse(is.na(source), NA, evalParse(toEval, env_)),
     lines = ifelse(is.na(source), NA, 1:length(source))
   )
 
