@@ -57,7 +57,7 @@ rowDealer = function(row_, env_) {
   while (str_detect(row_, "&.*?&")) {
 
     contains_ = row_ |> str_extract("(?<=&).*?(?=&)") |> evalParse(env_)
-    row_ = row_ |> str_replace("&.*?&", contains_)
+    row_ = row_ |> str_replace("&.*?&", as.character(contains_))
 
   }
 
