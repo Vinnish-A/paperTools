@@ -35,27 +35,33 @@ evalPlaceholder = function(path2raw_, env_ = .GlobalEnv) {
 
   df_convert_ = tibble(
     raw = readLines(path2raw_),
-    source = str_extract(raw, "&.*?&"),
-    toEval = str_extract(raw, "(?<=&).*?(?=&)"),
-    UMI = ifelse(is.na(source), NA, evalParse(toEval, env_)),
-    lines = ifelse(is.na(source), NA, 1:length(source))
+    space = str_count(raw, '&')/2,
+    new = map_chr(raw, rowDealer, env_ = env_)
   )
 
-  file_new_ = c()
-  for (i_ in seq_along(df_convert_$raw)) {
-
-    file_new_[[i_]] = df_convert_$raw[[i_]]
-
-    if (i_ %in% df_convert_$lines) {
-
-      file_new_[[i_]] = str_replace(file_new_[[i_]], "&.*?&", df_convert_$UMI[[i_]])
-
-    }
-
-  }
-  file_new_ = unlist(file_new_)
+  file_new_ = df_convert_$new
 
   return(file_new_)
+
+}
+
+#' rowDealer
+#'
+#' Eval where '&&' exists in a row.
+#'
+#' @importFrom stringr str_extract str_replace str_detect
+#'
+#' @export
+rowDealer = function(row_, env_) {
+
+  while (str_detect(row_, "&.*?&")) {
+
+    contains_ = row_ |> str_extract("(?<=&).*?(?=&)") |> evalParse(env_)
+    row_ = row_ |> str_replace("&.*?&", contains_)
+
+  }
+
+  return(row_)
 
 }
 

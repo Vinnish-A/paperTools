@@ -4,7 +4,7 @@
 \alias{evalPlaceholder}
 \title{evalPlaceholder}
 \usage{
-evalPlaceholder(path2raw_)
+evalPlaceholder(path2raw_, env_ = .GlobalEnv)
 }
 \arguments{
 \item{path2raw_}{path to raw file}
