@@ -169,3 +169,29 @@ findFile = function(keyWord_, path_ = ".") {
   walk(files_, ~ cli_text("{.href [{.x}](file://{.x})}."))
 
 }
+
+#' docal
+#'
+#' @export
+docal = function(x_, fun_, ...) {
+
+  params_ = lapply(as.list(match.call())[-c(1:3)], \(x__) eval(x__, envir = x_))
+  # if (is.null(names(params_)) | '' %in% names(params_)) names(params_) = names(formals(fun_))
+  res_ = do.call(fun_, params_)
+
+  return(res_)
+
+}
+
+#' is_dev_package
+#'
+#' @export
+is_dev_package = function(pkg_) {
+
+  if ('pkgload' %in% as.data.frame(installed.packages())[[1]]) {
+    return(pkgload::is_dev_package(pkg_))
+  } else {
+    return(F)
+  }
+
+}
